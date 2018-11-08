@@ -2,14 +2,16 @@ package com.ninuxgithub.authserver.model;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
+
+@Entity
+@Table(name = "user")
 public class User implements Serializable {
 
     /**
@@ -28,6 +30,12 @@ public class User implements Serializable {
     @NotNull
     @Size(min = 4, max = 50)
     private String userName;
+
+
+    @Column(name = "password")
+    @NotNull
+    @Size(min = 4, max = 50)
+    private String password;
 
     /**
      * 是否启用用户
@@ -48,9 +56,16 @@ public class User implements Serializable {
     /**
      * 密码重置的时间
      */
-    @Column(name="resetPasswordTime")
+    @Column(name = "resetPasswordTime")
     @NotNull
+    @Temporal(TemporalType.TIMESTAMP)
     private Date resetPasswordTime;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_authorities",
+            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "authority_id", referencedColumnName = "authId")})
+    private List<Authority> authorities;
 
 
     public String getId() {
@@ -67,6 +82,14 @@ public class User implements Serializable {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public Boolean getEnable() {
@@ -91,5 +114,13 @@ public class User implements Serializable {
 
     public void setResetPasswordTime(Date resetPasswordTime) {
         this.resetPasswordTime = resetPasswordTime;
+    }
+
+    public List<Authority> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(List<Authority> authorities) {
+        this.authorities = authorities;
     }
 }
