@@ -1,8 +1,8 @@
 package com.ninuxgithub.authserver.config;
 
-import com.ninuxgithub.authserver.service.JwtUserDetailsService;
 import com.ninuxgithub.authserver.jwt.JwtAuthenticationEntryPoint;
 import com.ninuxgithub.authserver.jwt.JwtAuthorizationTokenFilter;
+import com.ninuxgithub.authserver.service.JwtUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -72,9 +72,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .authorizeRequests()
 
-                // Un-secure H2 Database
-                .antMatchers("/h2-console/**/**").permitAll()
-
                 .antMatchers("/auth/**").permitAll()
                 .anyRequest().authenticated();
 
@@ -109,12 +106,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.html",
                         "/**/*.css",
                         "/**/*.js"
-                )
+                );
 
-                // Un-secure H2 Database (for testing purposes, H2 console shouldn't be unprotected in production)
-                .and()
-                .ignoring()
-                .antMatchers("/h2-console/**/**");
     }
 }
 
