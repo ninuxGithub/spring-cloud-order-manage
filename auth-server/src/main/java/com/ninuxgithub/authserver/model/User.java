@@ -67,6 +67,17 @@ public class User implements Serializable {
             inverseJoinColumns = {@JoinColumn(name = "authority_id", referencedColumnName = "authId")})
     private List<Authority> authorities;
 
+    public User() {
+    }
+
+    public User(String userName, String password, Boolean enable, String email, Date resetPasswordTime, List<Authority> authorities) {
+        this.userName = userName;
+        this.password = password;
+        this.enable = enable;
+        this.email = email;
+        this.resetPasswordTime = resetPasswordTime;
+        this.authorities = authorities;
+    }
 
     public String getId() {
         return id;

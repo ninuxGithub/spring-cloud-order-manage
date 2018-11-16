@@ -30,6 +30,14 @@ public class Authority implements Serializable {
     @ManyToMany(mappedBy = "authorities", fetch = FetchType.LAZY)
     private List<User> users;
 
+    public Authority() {
+    }
+
+    public Authority(AuthorityName name, List<User> users) {
+        this.name = name;
+        this.users = users;
+    }
+
     public String getAuthId() {
         return authId;
     }

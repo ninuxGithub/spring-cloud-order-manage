@@ -8,6 +8,16 @@ server:
   port: 8762
 
 
+#jwt config
+jwt:
+  header: Authorization
+  secret: ninuxGithub
+  expiration: 604800
+  route:
+    authentication:
+      path: /auth
+      refresh: /refresh
+
 #jpa config
 spring:
   application:
