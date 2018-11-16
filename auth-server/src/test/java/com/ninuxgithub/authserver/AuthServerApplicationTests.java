@@ -3,6 +3,7 @@ package com.ninuxgithub.authserver;
 import com.ninuxgithub.authserver.model.Authority;
 import com.ninuxgithub.authserver.model.AuthorityName;
 import com.ninuxgithub.authserver.model.User;
+import com.ninuxgithub.authserver.repository.AuthorityRepository;
 import com.ninuxgithub.authserver.repository.UserRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,17 +22,36 @@ public class AuthServerApplicationTests {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    AuthorityRepository authorityRepository;
+
     BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Test
     public void contextLoads() {
+        /*createAdmin();
+        createUser();*/
+
+    }
+
+    public void createAdmin() {
         String password = passwordEncoder.encode("admin");
         System.out.println(password);
-        User admin = new User("admin", "admin", true, "admin@qq.com", new Date(), null);
-        Authority authority = new Authority(AuthorityName.ROLE_ADMIN, Arrays.asList(admin));
-        admin.setAuthorities(Arrays.asList(authority));
+        Authority authority = new Authority(AuthorityName.ROLE_ADMIN, null);
+        User admin = new User("admin", password, true, "admin@qq.com", new Date(), Arrays.asList(authority));
+        authority.setUsers(Arrays.asList(admin));
+        authorityRepository.save(authority);
         userRepository.save(admin);
+    }
 
+    public void createUser() {
+        String password = passwordEncoder.encode("user");
+        System.out.println(password);
+        Authority authority = new Authority(AuthorityName.ROLE_USER, null);
+        User user = new User("user", password, true, "user@qq.com", new Date(), Arrays.asList(authority));
+        authority.setUsers(Arrays.asList(user));
+        authorityRepository.save(authority);
+        userRepository.save(user);
     }
 
 }

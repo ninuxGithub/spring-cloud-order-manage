@@ -23,7 +23,7 @@ public class Authority implements Serializable {
 
 
     @Column(name = "name")
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     @NotNull
     private AuthorityName name;
 
