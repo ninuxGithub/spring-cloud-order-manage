@@ -10,3 +10,28 @@
 
 * 订单的生成端
     >监听队列 获取队列的请求参数
+    
+    
+    
+    
+### ide 修改自动生效
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-devtools</artifactId>
+    <optional>true</optional>
+</dependency>
+
+<plugin>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-maven-plugin</artifactId>
+    <configuration>
+        <fork>true</fork>
+    </configuration>
+</plugin>
+
+```
+
+setting:  compiler  : build project automatically true
+ctrl+alt+shift +/  -->registry --> compiler.automake.allow.when.app.running true
+
