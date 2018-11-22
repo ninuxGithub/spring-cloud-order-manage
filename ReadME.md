@@ -32,6 +32,6 @@
 
 ```
 
-setting:  compiler  : build project automatically true
-ctrl+alt+shift +/  -->registry --> compiler.automake.allow.when.app.running true
+setting:  compiler  : build project automatically true   
+ctrl+alt+shift +/  -->registry --> compiler.automake.allow.when.app.running true  
 
