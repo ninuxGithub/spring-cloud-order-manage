@@ -13,6 +13,7 @@
         <module>eureka-server</module>
         <module>order-client</module>
         <module>order-server</module>
+        <module>eshop</module>
     </modules>
 
     <name>spring-cloud-order-manage</name>
