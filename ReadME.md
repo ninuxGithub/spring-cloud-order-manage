@@ -35,3 +35,10 @@
 setting:  compiler  : build project automatically true   
 ctrl+alt+shift +/  -->registry --> compiler.automake.allow.when.app.running true  
 
+
+### 工作日志
+```log
+2018-11-23 14:52:21 添加前端用户体系， 注册， 登录
+
+```
+
