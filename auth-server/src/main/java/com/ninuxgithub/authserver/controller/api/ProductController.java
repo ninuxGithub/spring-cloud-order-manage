@@ -6,6 +6,7 @@ import com.ninuxgithub.authserver.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -20,6 +21,11 @@ public class ProductController {
     @RequestMapping(value = "/api/productList", method = RequestMethod.GET)
     public List<Product> getProductList() {
         return productRepository.findAll();
+    }
+
+    @RequestMapping(value = "/api/findProductById", method = RequestMethod.GET)
+    public Product findProductById(@RequestParam(value = "id") String id) {
+        return productRepository.findById(id).orElse(null);
     }
 
 

@@ -47,7 +47,7 @@ public class AuthServerApplication implements CommandLineRunner {
                     new Product("小米手机4c", 29d, "小米手机4c 小米4c 智能", "peijian3.jpg", Type.fit,2532),
                     new Product("红米NOTE 4X", 49d, "红米NOTE 4X 红米note4X", "peijian4.jpg", Type.fit,2232),
                     new Product("小米自拍杆", 89d, "小米支架式自拍杆", "peijian5.jpg", Type.fit,2290),
-                    new Product("蓝牙音箱", 129d, "小钢炮蓝牙音箱2", "peijian6.jpg", Type.fit,2590),
+                    new Product("蓝牙音箱", 129d, "小钢炮蓝牙音箱2", "peijian7.jpg", Type.fit,2590),
                     new Product("指环支架", 19d, "小米指环支架", "peijian7.jpg", Type.fit,2865),
                     new Product("米家随身风扇", 19.9d, "米家随身风扇", "peijian8.jpg", Type.fit,2765),
                     new Product("红米4X 高透软胶保护套", 59d, "红米4X 高透软胶保护套", "peijian9.jpg", Type.fit,1786),
