@@ -150,7 +150,7 @@
                     console.dir(result)
                     if(result){
                         clearInterval(interval);
-                        $('#requestInfo').html("购买uuid任务： "+uuid+"的结果是： "+ JSON.stringify(result.data));
+                        $('#requestInfo').html("购买uuid任务： "+uuid+"的结果是： "+ result.data);
                         uuid=null;
                     }
                 },1000);
