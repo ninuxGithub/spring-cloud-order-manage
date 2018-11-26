@@ -11,15 +11,7 @@
 <header>
     <div class="top center">
         <div class="right fr">
-            <div class="gouwuche fr"><a href="">购物车</a></div>
-            <div class="fr">
-                <ul>
-                    <li><a href="./login.html" target="_blank">登录</a></li>
-                    <li>|</li>
-                    <li><a href="./register.html" target="_blank">注册</a></li>
-                    <li>|</li>
-                    <li><a href="">消息通知</a></li>
-                </ul>
+            <div class="fr" id="loginInfo">
             </div>
             <div class="clear"></div>
         </div>
@@ -103,11 +95,11 @@
                     html +='<div class="jianjie mr40 ml20 mt10">剩余：'+data.amount+'件</div>';
                     html +='<div class="jiage ml20 mt10">价格：'+data.price+'元</div>';
                     html +=' <div class="xiadan ml20 mt20">';
-                    html +='<input class="jrgwc" type="button" name="jrgwc" value="立即购买"/>';
+                    html +='<input class="jrgwc" type="button" name="jrgwc" id="buyBtn" data="'+data.id+'" value="立即购买"/>';
+                    html +='<div id="requestInfo"></div>';
                     html +='</div>';
                     html +='</div>';
                     html +='<div class="clear"></div>';
-
                     $('#productDetail').html(html);
 
                 }
@@ -116,6 +108,98 @@
 
             }
         });
+
+        function getUUID() {
+            var s = [];
+            var hexDigits = "0123456789abcdef";
+            for (var i = 0; i < 36; i++) {
+                s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
+            }
+            s[14] = "4";  // bits 12-15 of the time_hi_and_version field to 0010
+            s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1);  // bits 6-7 of the clock_seq_hi_and_reserved to 01
+            s[8] = s[13] = s[18] = s[23] = "-";
+
+            var uuid = s.join("").replace(new RegExp( '-' , "g" ),'');
+            return uuid;
+        }
+
+        var uuid=null;
+
+        //动态绑定点击事件
+        $('body').on('click','#buyBtn', function () {
+            var id = $('#buyBtn').attr('data');
+            if(uuid == null){
+                uuid = getUUID();
+                $.ajax({
+                    url: "http://10.1.51.96:8763/mq/buyGood",
+                    type: "get",
+                    data: {'data': id,"uuid":uuid,'requestType':'buyGood'},
+                    sync: false,
+                    dataType: "json",
+                    success: function (data, textStatus, jqXHR) {
+                        $('#requestInfo').html("购买uuid任务： "+uuid+"，请等待");
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.dir(XMLRequest)
+                        console.dir(textStatus)
+                        console.dir(errorThrown)
+                    }
+                });
+                var interval = setInterval(function(){
+                    var result = flushTask();
+                    console.dir(result)
+                    if(result){
+                        clearInterval(interval);
+                        $('#requestInfo').html("购买uuid任务： "+uuid+"的结果是： "+ JSON.stringify(result.data));
+                        uuid=null;
+                    }
+                },1000);
+            }else{
+                $('#requestInfo').html("购买uuid任务： "+uuid+"，请等待");
+            }
+        });
+
+        function flushTask(){
+            var result = null;
+            $.ajax({
+                url : 'http://10.1.51.96:8763/mq/flushTask',
+                type : 'get',
+                data : {"uuid":uuid},
+                async:false,
+                dataType : 'json',
+                success : function(data) {
+                    if(data != null && data.result){
+                        result = data.result;
+                    }
+                },
+                error : function(XMLRequest, textStatus, errorThrown) {
+                    console.dir(XMLRequest)
+                    console.dir(textStatus)
+                    console.dir(errorThrown)
+                }
+            });
+            return result;
+        }
+
+
+        //登录信息显示
+
+        var _loginCustomer = localStorage.getItem('loginCustomer');
+        var loginInfo ='';
+        if(null != _loginCustomer && _loginCustomer != undefined){
+            var  customer = JSON.parse(_loginCustomer);
+            loginInfo +='<ul>';
+            loginInfo +='<li>登录用户：'+customer.userName+'</li>';
+            loginInfo +='</ul>';
+        }else{
+            loginInfo +='<ul>';
+            loginInfo +='<li><a href="./login.html" target="_blank">登录</a></li>';
+            loginInfo +='<li>|</li>';
+            loginInfo +='<li><a href="./register.html" target="_blank">注册</a></li>';
+            loginInfo +='</ul>';
+        }
+
+        $('#loginInfo').html(loginInfo);
     });
 </script>
 

@@ -11,15 +11,7 @@
 <header>
     <div class="top center">
         <div class="right fr">
-            <div class="gouwuche fr"><a href="">购物车</a></div>
-            <div class="fr">
-                <ul>
-                    <li><a href="./login.html" target="_blank">登录</a></li>
-                    <li>|</li>
-                    <li><a href="./register.html" target="_blank">注册</a></li>
-                    <li>|</li>
-                    <li><a href="">消息通知</a></li>
-                </ul>
+            <div class="fr" id="loginInfo">
             </div>
             <div class="clear"></div>
         </div>
@@ -103,6 +95,23 @@
 
             }
         });
+
+        var _loginCustomer = localStorage.getItem('loginCustomer');
+        var loginInfo ='';
+        if(null != _loginCustomer && _loginCustomer != undefined){
+            var  customer = JSON.parse(_loginCustomer);
+            loginInfo +='<ul>';
+            loginInfo +='<li>登录用户：'+customer.userName+'</li>';
+            loginInfo +='</ul>';
+        }else{
+            loginInfo +='<ul>';
+            loginInfo +='<li><a href="./login.html" target="_blank">登录</a></li>';
+            loginInfo +='<li>|</li>';
+            loginInfo +='<li><a href="./register.html" target="_blank">注册</a></li>';
+            loginInfo +='</ul>';
+        }
+
+        $('#loginInfo').html(loginInfo);
     });
 </script>
 </body>

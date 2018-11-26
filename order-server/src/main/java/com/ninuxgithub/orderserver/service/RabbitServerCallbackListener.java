@@ -40,7 +40,7 @@ public class RabbitServerCallbackListener implements ChannelAwareMessageListener
         ;
     };
 
-    private static final String url ="http://localhost:8888/getUserByUserId?uid=";
+    private static final String url ="http://10.1.51.96:8762/api/findProductById?id=";
 
     private static final RestTemplate restTemplate = new RestTemplate();
 
@@ -64,10 +64,18 @@ public class RabbitServerCallbackListener implements ChannelAwareMessageListener
         try {
             logger.info("[RabbitMQ Server Reply] :" + json);
             JSONObject paramsData = JSONObject.parseObject(json);
-            String uid = paramsData.getString("uid");
+            String data = paramsData.getString("data");
             String uuid = paramsData.getString("uuid");
-            MessagePropety messagePropety = restTemplate.getForEntity(url + uid, MessagePropety.class).getBody();
+            String requestType = paramsData.getString("requestType");
+
+            if(requestType.equals("buyGood")){
+
+            }
+            MessagePropety messagePropety= new MessagePropety();
+            String result   = restTemplate.getForEntity(url + data, String.class).getBody();
             messagePropety.setUuid(uuid);
+            messagePropety.setData(result);
+            messagePropety.setRequestType(requestType);
            
             Thread.currentThread().sleep(2000);
 

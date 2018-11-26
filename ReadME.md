@@ -39,6 +39,7 @@ ctrl+alt+shift +/  -->registry --> compiler.automake.allow.when.app.running true
 ### 工作日志
 ```log
 2018-11-23 14:52:21 添加前端用户体系， 注册， 登录
+2018-11-26 17:52:24 加入购买-->请求加入到队列-->请求消费队列->restTamplate请求接口获取商品详细，保存到redis ->轮询返回订单结果
 
 ```
 
