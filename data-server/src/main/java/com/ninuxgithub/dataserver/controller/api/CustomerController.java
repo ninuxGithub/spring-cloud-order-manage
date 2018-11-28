@@ -1,11 +1,12 @@
-package com.ninuxgithub.authserver.controller.api;
+package com.ninuxgithub.dataserver.controller.api;
 
 
-import com.ninuxgithub.authserver.model.Customer;
-import com.ninuxgithub.authserver.repository.CustomerRepository;
-import com.ninuxgithub.authserver.utils.Md5Util;
+import com.ninuxgithub.dataserver.model.Customer;
+import com.ninuxgithub.dataserver.service.CustomerService;
+import com.ninuxgithub.dataserver.utils.Md5Util;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,7 +19,7 @@ public class CustomerController {
 
 
     @Autowired
-    CustomerRepository customerRepository;
+    CustomerService customerService;
 
 
     /**
@@ -28,7 +29,7 @@ public class CustomerController {
      * @return
      */
     @RequestMapping(value = "/api/registry", method = RequestMethod.POST)
-    public Map<String, Object> registry(Customer customer) {
+    public Map<String, Object> registry(@RequestBody Customer customer) {
         Map<String, Object> resultMap = new HashMap<>();
         if (null != customer) {
             if (StringUtils.isBlank(customer.getUserName())) {
@@ -43,14 +44,14 @@ public class CustomerController {
                 resultMap.put("password", "重复输入密码不一致");
             }
 
-            Customer customerByUserName = customerRepository.findCustomerByUserName(customer.getUserName());
+            Customer customerByUserName = customerService.findCustomerByUserName(customer.getUserName());
             if (null != customerByUserName) {
                 resultMap.put("userName", "该用户名称已存在");
             }
 
             if (resultMap.size() == 0) {
                 customer.setPassword(Md5Util.getMD5(customer.getPassword()));
-                Customer reposCustomer = customerRepository.save(customer);
+                Customer reposCustomer = customerService.saveCustomer(customer);
                 reposCustomer.setPassword(null);
                 resultMap.put("loginCustomer", reposCustomer);
             }
@@ -61,15 +62,19 @@ public class CustomerController {
     }
 
     @RequestMapping(value = "/api/login", method = RequestMethod.POST)
-    public Map<String, Object> login(Customer customer) {
+    public Map<String, Object> login(@RequestBody Customer customer) {
         Map<String, Object> resultMap = new HashMap<>();
+        System.out.println(customer);
+        if (customer.getUserName() == null) {
+            return null;
+        }
         if (null != customer) {
             if (StringUtils.isBlank(customer.getUserName())) {
                 resultMap.put("userName", "登录用户名称不能为空");
             } else if (StringUtils.isBlank(customer.getPassword())) {
                 resultMap.put("password", "登录密码不能为空");
             }
-            Customer customerByUserName = customerRepository.findCustomerByUserName(customer.getUserName());
+            Customer customerByUserName = customerService.findCustomerByUserName(customer.getUserName());
             if (null == customerByUserName) {
                 resultMap.put("userName", "该用户不存在");
             }

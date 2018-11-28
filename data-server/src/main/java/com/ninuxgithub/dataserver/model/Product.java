@@ -1,5 +1,6 @@
-package com.ninuxgithub.authserver.model;
+package com.ninuxgithub.dataserver.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -26,6 +27,12 @@ public class Product implements Serializable {
     private String description;
 
     private String imgUrl;
+
+
+    @JsonIgnore
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "product")
+    private Order order;
+
 
     @Column(name = "type")
     @Enumerated(EnumType.ORDINAL)
@@ -100,5 +107,13 @@ public class Product implements Serializable {
 
     public void setAmount(int amount) {
         this.amount = amount;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
     }
 }

@@ -1,8 +1,8 @@
-package com.ninuxgithub.authserver.controller.api;
+package com.ninuxgithub.dataserver.controller.api;
 
 
-import com.ninuxgithub.authserver.model.Product;
-import com.ninuxgithub.authserver.repository.ProductRepository;
+import com.ninuxgithub.dataserver.model.Product;
+import com.ninuxgithub.dataserver.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,17 +15,17 @@ import java.util.List;
 public class ProductController {
 
     @Autowired
-    ProductRepository productRepository;
+    ProductService productService;
 
 
     @RequestMapping(value = "/api/productList", method = RequestMethod.GET)
     public List<Product> getProductList() {
-        return productRepository.findAll();
+        return productService.findProducts();
     }
 
     @RequestMapping(value = "/api/findProductById", method = RequestMethod.GET)
     public Product findProductById(@RequestParam(value = "id") String id) {
-        return productRepository.findById(id).orElse(null);
+        return productService.findProductById(id);
     }
 
 

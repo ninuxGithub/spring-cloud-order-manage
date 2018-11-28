@@ -48,11 +48,11 @@
                 }
                 console.dir(loginData)
                 $.ajax({
-                    url: "http://10.1.51.96:8762/api/registry",
+                    url: "http://10.1.51.96:8005/api/registry",
                     type: "POST",
                     data: loginData,
                     headers: {
-                        "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
+                        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
                     },
                     sync: false,
                     dataType: "json",

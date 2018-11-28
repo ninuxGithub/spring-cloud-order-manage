@@ -1,9 +1,11 @@
-package com.ninuxgithub.authserver.model;
+package com.ninuxgithub.dataserver.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "customer")
@@ -25,6 +27,10 @@ public class Customer implements Serializable {
 
     @Transient
     private String repassword;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    private List<Order> orders;
 
 
     public Customer() {
@@ -76,6 +82,14 @@ public class Customer implements Serializable {
 
     public void setRepassword(String repassword) {
         this.repassword = repassword;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 
     @Override

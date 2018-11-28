@@ -40,7 +40,7 @@ public class RabbitServerCallbackListener implements ChannelAwareMessageListener
         ;
     };
 
-    private static final String url ="http://10.1.51.96:8762/api/findProductById?id=";
+    private static final String url ="http://10.1.51.96:8005/api/findProductById?id=";
 
     private static final RestTemplate restTemplate = new RestTemplate();
 

@@ -1,4 +1,4 @@
-package com.ninuxgithub.authserver.model;
+package com.ninuxgithub.dataclientfeign.model;
 
 public enum Type {
     StarType("明星产品"), fit("配件");

@@ -1,6 +1,6 @@
-package com.ninuxgithub.authserver.repository;
+package com.ninuxgithub.dataserver.repository;
 
-import com.ninuxgithub.authserver.model.Product;
+import com.ninuxgithub.dataserver.model.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
