@@ -4,6 +4,9 @@ spring:
   application:
     name: eureka-server
 eureka:
+  server:
+    enable-self-preservation: false           #启动自我保护
+    eviction-interval-timer-in-ms: 1000       #续期时间， 扫描失效服务的时间
   instance:
     hostname: localhost
   client:

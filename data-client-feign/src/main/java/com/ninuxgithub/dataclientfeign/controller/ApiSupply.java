@@ -5,7 +5,6 @@ import com.ninuxgithub.dataclientfeign.model.Customer;
 import com.ninuxgithub.dataclientfeign.model.Product;
 import com.ninuxgithub.dataclientfeign.service.FeignService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,7 +28,7 @@ public class ApiSupply {
 //    }
 
 
-    @RequestMapping(value = "/api/registry", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
+    @RequestMapping(value = "/api/registry", method = RequestMethod.POST,  consumes = "application/json")
     public Map<String, Object> registry(@RequestBody Customer customer) {
         return feignService.registry(customer);
 

@@ -17,7 +17,7 @@ import java.util.Map;
 @FeignClient(value = "data-server")
 public interface FeignService {
 
-    @RequestMapping(value = "/api/registry", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/registry", method = RequestMethod.POST, consumes = "application/json")
     public Map<String, Object> registry(@RequestBody Customer customer);
 
 

@@ -40,9 +40,17 @@ public class MqRequestController {
     public Map<String, Object> flushTask(HttpServletRequest request) throws InterruptedException {
         Map<String, Object> map = new HashMap<>();
         String result = redisUtil.get(request.getParameter("uuid"));
-        MessagePropety messagePropety=null;
-        if(null != request && !"".equals(result)){
+        MessagePropety messagePropety = null;
+        if (null != request && !"".equals(result)) {
+            System.out.println("result is  :  "+result);
             messagePropety = JSON.parseObject(result, MessagePropety.class);
+
+           /* String data = (String) messagePropety.getData();
+            System.out.println(data);*/
+            /*Object data = messagePropety.getData();
+            Product product = (Product) data;*/
+
+
         }
         map.put("result", messagePropety);
         return map;
