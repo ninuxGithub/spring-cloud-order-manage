@@ -89,4 +89,18 @@ public class Product implements Serializable {
     public void setAmount(int amount) {
         this.amount = amount;
     }
+
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id='" + id + '\'' +
+                ", productName='" + productName + '\'' +
+                ", price=" + price +
+                ", description='" + description + '\'' +
+                ", imgUrl='" + imgUrl + '\'' +
+                ", type=" + type +
+                ", amount=" + amount +
+                '}';
+    }
 }

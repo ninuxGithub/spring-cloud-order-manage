@@ -44,6 +44,7 @@ public class MqRequestController {
         if (null != request && !"".equals(result)) {
             System.out.println("result is  :  "+result);
             messagePropety = JSON.parseObject(result, MessagePropety.class);
+            messagePropety.getData();
 
            /* String data = (String) messagePropety.getData();
             System.out.println(data);*/

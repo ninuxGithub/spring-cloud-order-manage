@@ -22,11 +22,11 @@ public class Order implements Serializable {
     private String id;
 
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id")
     private Product product;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
@@ -35,11 +35,11 @@ public class Order implements Serializable {
     public Order() {
     }
 
-   /* public Order(Product product, Customer customer, Date createTime) {
+    public Order(Product product, Customer customer, Date createTime) {
         this.product = product;
         this.customer = customer;
         this.createTime = createTime;
-    }*/
+    }
 
     public String getId() {
         return id;
@@ -57,13 +57,13 @@ public class Order implements Serializable {
         this.product = product;
     }
 
-//    public Customer getCustomer() {
-//        return customer;
-//    }
-//
-//    public void setCustomer(Customer customer) {
-//        this.customer = customer;
-//    }
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
 
     public Date getCreateTime() {
         return createTime;

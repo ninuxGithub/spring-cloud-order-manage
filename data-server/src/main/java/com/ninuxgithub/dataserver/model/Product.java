@@ -1,6 +1,5 @@
 package com.ninuxgithub.dataserver.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -29,9 +28,9 @@ public class Product implements Serializable {
     private String imgUrl;
 
 
-    @JsonIgnore
+   /* @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "product")
-    private Order order;
+    private Order order;*/
 
 
     @Column(name = "type")
@@ -109,11 +108,11 @@ public class Product implements Serializable {
         this.amount = amount;
     }
 
-    public Order getOrder() {
-        return order;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
-    }
+//    public Order getOrder() {
+//        return order;
+//    }
+//
+//    public void setOrder(Order order) {
+//        this.order = order;
+//    }
 }

@@ -1,10 +1,31 @@
 
-
 server:
   port: 8005
+
+#jpa config
 spring:
   application:
     name: data-client-feign
+  rabbitmq:
+    addresses: 10.1.51.96
+    host: 10.1.51.96
+    port: 5672
+    username: admin
+    password: admin
+    virtual-host: /
+    template:
+      reply-timeout: 1000
+  redis:
+    database: 0
+    host: 10.1.51.96
+    password: redis
+    jedis:
+      pool:
+        max-active: 8
+        max-wait: -1
+        max-idle: 8
+        min-idle: 0
+    timeout: 1000
 
 # eureka config
 eureka:

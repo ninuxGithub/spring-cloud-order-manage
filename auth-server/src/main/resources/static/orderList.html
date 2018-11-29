@@ -1,155 +1,122 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=8" >
-<title>会议列表</title>
-<link rel="stylesheet" type="text/css" href="Assets/css/reset.css"/>
-<link rel="stylesheet" type="text/css" href="Assets/css/common.css"/>
-<link rel="stylesheet" type="text/css" href="Assets/css/thems.css">
-<script type="text/javascript" src="Assets/js/jquery-1.8.3.min.js"></script>
-<script type="text/javascript">
-$(function(){
-	//自适应屏幕宽度
-	window.onresize=function(){ location=location }; 
-	
-	var main_h = $(window).height();
-	$('.hy_list').css('height',main_h-45+'px');
-	
-	var search_w = $(window).width()-40;
-	$('.search').css('width',search_w+'px');
-	//$('.list_hy').css('width',search_w+'px');
-});
-</script>
-<!--框架高度设置-->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=8">
+    <title>会议列表</title>
+    <link rel="stylesheet" type="text/css" href="Assets/css/reset.css"/>
+    <link rel="stylesheet" type="text/css" href="Assets/css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="Assets/css/thems.css">
+
+    <link rel="stylesheet" type="text/css" href="http://blog.mn886.net/jqGrid/javascript/jqgrid/css/ui.jqgrid.css">
+    <link rel="stylesheet" type="text/css"
+          href="http://blog.mn886.net/jqGrid/javascript/jqgrid/css/css/redmond/jquery-ui-1.8.16.custom.css">
+    <link rel="stylesheet" type="text/css"
+          href="http://blog.mn886.net/jqGrid/javascript/bootstrap/bootstrap-3.3.4-dist/css/bootstrap.css">
+    <script type="text/javascript" src="Assets/js/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript"
+            src="http://blog.mn886.net/jqGrid/javascript/jqgrid/js/jquery.jqGrid.src.js"></script>
+    <script type="text/javascript"
+            src="http://blog.mn886.net/jqGrid/javascript/jqgrid/js/i18n/grid.locale-cn.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            //自适应屏幕宽度
+            window.onresize = function () {
+                location = location
+            };
+
+            var main_h = $(window).height();
+            $('.hy_list').css('height', main_h - 45 + 'px');
+
+            var search_w = $(window).width() - 40;
+            $('.search').css('width', search_w + 'px');
+            //$('.list_hy').css('width',search_w+'px');
+
+            /**************************************时间格式化处理************************************/
+            function dateFormat(fmt,date)
+            { //author: meizz
+                var o = {
+                    "M+" : date.getMonth()+1,                 //月份
+                    "d+" : date.getDate(),                    //日
+                    "h+" : date.getHours(),                   //小时
+                    "m+" : date.getMinutes(),                 //分
+                    "s+" : date.getSeconds(),                 //秒
+                    "q+" : Math.floor((date.getMonth()+3)/3), //季度
+                    "S"  : date.getMilliseconds()             //毫秒
+                };
+                if(/(y+)/.test(fmt))
+                    fmt=fmt.replace(RegExp.$1, (date.getFullYear()+"").substr(4 - RegExp.$1.length));
+                for(var k in o)
+                    if(new RegExp("("+ k +")").test(fmt))
+                        fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+                return fmt;
+            }
+
+
+            $("#tableID").jqGrid({
+                    url: 'http://10.1.51.96:8005/api/findOrderList',
+                    datatype: "json",
+                    colNames: ['编号', '创建时间', '产品名称', '价格', '用户名称'],
+                    colModel: [
+                        {name: 'id', index: 'id', width: 75,align:'center'},
+                        {name: 'createTime', index: 'createTime', width: 30,align:'right', formatter:function (cellValue, options, rowObject) {
+                            return dateFormat('yyyy-MM-dd hh:mm:ss', new Date(cellValue))
+                        }},
+                        {name: 'product.productName', index: 'productName', width: 50 ,align:'center'},
+                        {name: 'product.price', index: 'price', width: 30,align:'center'},
+                        {name: 'customer.userName', index: 'userName', width: 30,align:'center'},
+                    ],
+                    rowNum: 10,
+                    autowidth: true,
+                    rowList: [10, 20, 30],
+                    pager: jQuery('#pager1'),
+                    mtype: "post",
+                    sortname: 'id',
+                    viewrecords: true,
+                    sortorder: "desc",
+                    caption: "订单列表"
+                }).navGrid('#pager', {
+                    edit: false,
+                    add: false,
+                    del: false
+                });
+
+
+        });
+    </script>
+    <!--框架高度设置-->
 </head>
 
 <!--<body onLoad="Resize();">-->
 <body>
 <div id="right_ctn">
-	<div class="right_m">
-		<!--会议列表-->
+    <div class="right_m">
+        <!--会议列表-->
         <div class="hy_list">
-        	<div class="box_t">
-            	<span class="name">会议列表</span>
+            <div class="box_t">
+                <span class="name">会议列表</span>
                 <!--当前位置-->
                 <div class="position">
-                	<a href=""><img src="Assets/images/icon5.png" alt=""/></a>
+                    <a href=""><img src="Assets/images/icon5.png" alt=""/></a>
                     <a href="">首页</a>
                     <span><img src="Assets/images/icon3.png" alt=""/></span>
-                    <a href="">会议管理</a>
+                    <a href="">订单管理</a>
                     <span><img src="Assets/images/icon3.png" alt=""/></span>
-                    <a href="">会议列表</a>
+                    <a href="">订单列表</a>
                 </div>
                 <!--当前位置-->
             </div>
             <!--查询-->
             <div class="search">
-            	<span>按会议名称查询：</span>
+                <span>按会议名称查询：</span>
                 <div class="s_text"><input name="" type="text"></div>
                 <a href="" class="btn">查询</a>
             </div>
             <!--查询-->
             <div class="space_hx">&nbsp;</div>
+            <table id="tableID"></table>
+            <div id="pager" style="background: pink"></div>
             <!--列表-->
-            <form action="" method="post">
-            <table cellpadding="0" cellspacing="0" class="list_hy">
-              <tr>
-                <th class="xz" scope="col">选择</th>
-                <th scope="col"><div>会议名称/号码<a href="" class="up">&nbsp;</a><a href="" class="down">&nbsp;</a></div></th>
-                <th class="zt" scope="col"><div>状态<a href="" class="up">&nbsp;</a><a href="" class="down">&nbsp;</a></div></th>
-                <th scope="col">开始时间</th>
-                <th scope="col">时长</th>
-                <th scope="col">与会终端数</th>
-                <th scope="col">会议类型</th>
-                <th scope="col">会议容量</th>
-              </tr>
-              <tr>
-                <td class="xz"><input name="" type="checkbox" value=""></td>
-                <td>ip64/1</td>
-                <td class="zt">-</td>
-                <td>2012-10-11 13:28</td>
-                <td>永久会议</td>
-                <td>-</td>
-                <td>主会议</td>
-                <td>-</td>
-              </tr>
-              <tr>
-                <td class="xz"><input name="" type="checkbox" value=""></td>
-                <td>ip64/1</td>
-                <td class="zt">-</td>
-                <td>2012-10-11 13:28</td>
-                <td>永久会议</td>
-                <td>-</td>
-                <td>主会议</td>
-                <td>-</td>
-              </tr>
-              <tr>
-                <td class="xz"><input name="" type="checkbox" value=""></td>
-                <td>ip64/1</td>
-                <td class="zt">-</td>
-                <td>2012-10-11 13:28</td>
-                <td>永久会议</td>
-                <td>-</td>
-                <td>主会议</td>
-                <td>-</td>
-              </tr>
-              <tr>
-                <td class="xz"><input name="" type="checkbox" value=""></td>
-                <td>ip64/1</td>
-                <td class="zt">-</td>
-                <td>2012-10-11 13:28</td>
-                <td>永久会议</td>
-                <td>-</td>
-                <td>主会议</td>
-                <td>-</td>
-              </tr>
-              <tr>
-                <td class="xz"><input name="" type="checkbox" value=""></td>
-                <td>ip64/1</td>
-                <td class="zt">-</td>
-                <td>2012-10-11 13:28</td>
-                <td>永久会议</td>
-                <td>-</td>
-                <td>主会议</td>
-                <td>-</td>
-              </tr>
-              <tr>
-                <td class="xz"><input name="" type="checkbox" value=""></td>
-                <td>ip64/1</td>
-                <td class="zt">-</td>
-                <td>2012-10-11 13:28</td>
-                <td>永久会议</td>
-                <td>-</td>
-                <td>主会议</td>
-                <td>-</td>
-              </tr>
-            </table>
-            <!--列表-->
-            <!--右边底部-->
-            <div class="r_foot">
-            	<div class="r_foot_m">
-            	<span>
-                	<input name="" type="checkbox" value="">
-                    <em>全部选中</em>
-                </span>
-                <a href="" class="btn">删除</a>
-                <a href="" class="btn">刷新</a>
-                
-                <!--分页-->
-                <div class="page">
-                	<a href="" class="prev"><img src="Assets/images/icon7.png" alt=""/></a>
-                    <a class="now">1</a>
-                    <a href="">2</a>
-                    <a href="">3</a>
-                    <a href="">4</a>
-                    <a href="">5</a>
-                    <a href="">6</a>
-                    <a href="" class="next"><img src="Assets/images/icon8.png" alt=""/></a>
-                </div>
-                <!--分页-->
-                </div>
-            </div>
-            </form>
             <!--右边底部-->
         </div>
         <!--会议列表-->

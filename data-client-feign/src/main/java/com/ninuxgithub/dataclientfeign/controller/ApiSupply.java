@@ -2,6 +2,7 @@ package com.ninuxgithub.dataclientfeign.controller;
 
 
 import com.ninuxgithub.dataclientfeign.model.Customer;
+import com.ninuxgithub.dataclientfeign.model.Order;
 import com.ninuxgithub.dataclientfeign.model.Product;
 import com.ninuxgithub.dataclientfeign.service.FeignService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class ApiSupply {
 //    }
 
 
-    @RequestMapping(value = "/api/registry", method = RequestMethod.POST,  consumes = "application/json")
+    @RequestMapping(value = "/api/registry", method = RequestMethod.POST, consumes = "application/json")
     public Map<String, Object> registry(@RequestBody Customer customer) {
         return feignService.registry(customer);
 
@@ -48,6 +49,16 @@ public class ApiSupply {
     @RequestMapping(value = "/api/findProductById", method = RequestMethod.GET)
     public Product findProductById(@RequestParam(value = "id") String id) {
         return feignService.findProductById(id);
+    }
+
+    @RequestMapping(value = "/api/saveOrder", method = RequestMethod.GET)
+    public Order saveOrder(@RequestParam("pid") String pid, @RequestParam("uid") String uid) {
+        return feignService.saveOrder(pid, uid);
+    }
+
+    @RequestMapping(value = "/api/findOrderList",method =  {RequestMethod.GET, RequestMethod.POST})
+    public List<Order> findOrderList() {
+        return feignService.findOrderList();
     }
 
 

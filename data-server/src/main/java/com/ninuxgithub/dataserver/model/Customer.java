@@ -23,9 +23,12 @@ public class Customer implements Serializable {
 
     private String userName;
 
+    @JsonIgnore
+
     private String password;
 
     @Transient
+    @JsonIgnore
     private String repassword;
 
     @JsonIgnore
@@ -92,14 +95,14 @@ public class Customer implements Serializable {
         this.orders = orders;
     }
 
+
     @Override
     public String toString() {
         return "Customer{" +
                 "id='" + id + '\'' +
                 ", phoneNum='" + phoneNum + '\'' +
                 ", userName='" + userName + '\'' +
-                ", password='" + password + '\'' +
-                ", repassword='" + repassword + '\'' +
+                ", orders=" + orders +
                 '}';
     }
 }

@@ -14,8 +14,6 @@ eureka:
 server:
   port: 8081
 
-
-
 #jpa config
 spring:
   application:
@@ -34,6 +32,17 @@ spring:
     password: root
     driver-class-name: com.mysql.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
+
+
+#tx-lcn config
+tm:
+  manager:
+    url: http://10.1.51.96:8899/tx/manager/
+logging:
+  level:
+    com.ninuxgithub: debug
+    com.codingapi: debug
+
 
 
 

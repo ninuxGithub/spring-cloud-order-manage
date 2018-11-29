@@ -11,6 +11,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 
 /**
  * WebMvcConfigurerAdapter is deprecated
+ *
+ * demo from : http://www.spring4all.com/article/177
  */
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurationSupport {
@@ -23,6 +25,7 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
         corsConfiguration.addAllowedHeader("*"); // 2允许任何头
         corsConfiguration.addAllowedMethod("*"); // 3允许任何方法（post、get等）
         source.registerCorsConfiguration("/api/**", corsConfiguration); // 4
+        source.registerCorsConfiguration("/mq/**", corsConfiguration); // 4
         return new CorsFilter(source);
     }
 
@@ -36,6 +39,12 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
     protected void addCorsMappings(CorsRegistry registry) {
         super.addCorsMappings(registry);
         registry.addMapping("/api/**")
+                .allowedOrigins("*")
+                .allowedMethods("*")
+                .allowedHeaders("*")
+                .allowCredentials(false)
+                .maxAge(3600);
+        registry.addMapping("/mq/**")
                 .allowedOrigins("*")
                 .allowedMethods("*")
                 .allowedHeaders("*")

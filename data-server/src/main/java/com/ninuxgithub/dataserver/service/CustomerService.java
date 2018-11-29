@@ -7,4 +7,6 @@ public interface CustomerService {
     Customer findCustomerByUserName(String userName);
 
     Customer saveCustomer(Customer customer);
+
+    Customer findCustomerById(String uid);
 }

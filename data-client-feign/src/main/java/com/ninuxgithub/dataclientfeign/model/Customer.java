@@ -1,5 +1,7 @@
 package com.ninuxgithub.dataclientfeign.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 
 public class Customer implements Serializable {
@@ -13,8 +15,10 @@ public class Customer implements Serializable {
 
     private String userName;
 
+    @JsonIgnore
     private String password;
 
+    @JsonIgnore
     private String repassword;
 
 
@@ -75,8 +79,6 @@ public class Customer implements Serializable {
                 "id='" + id + '\'' +
                 ", phoneNum='" + phoneNum + '\'' +
                 ", userName='" + userName + '\'' +
-                ", password='" + password + '\'' +
-                ", repassword='" + repassword + '\'' +
                 '}';
     }
 }
