@@ -12,9 +12,13 @@
     <description>Demo project for Spring Boot</description>
 
     <parent>
-        <groupId>com.ninuxGithub</groupId>
+       <!-- <groupId>com.ninuxGithub</groupId>
         <artifactId>spring-cloud-order-manage</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>0.0.1-SNAPSHOT</version>-->
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.4.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
     <properties>
@@ -24,6 +28,7 @@
         <maven.compile.source>1.8</maven.compile.source>
         <maven.compile.target>1.8</maven.compile.target>
         <lcn.last.version>4.1.0</lcn.last.version>
+        <spring-cloud.version>Dalston.SR1</spring-cloud.version>
     </properties>
 
     <dependencies>
@@ -63,10 +68,10 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-netflix-eureka-client</artifactId>
         </dependency>
-        <dependency>
+       <!-- <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
