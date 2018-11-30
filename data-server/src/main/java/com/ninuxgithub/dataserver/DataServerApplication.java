@@ -15,6 +15,7 @@ import java.util.List;
 
 @SpringBootApplication
 @EnableEurekaClient
+//spring boot 2.x  兼容lcn的解决方案：https://www.cnblogs.com/sxdcgaq8080/p/9776695.html
 //参考：https://jadyer.cn/2017/01/19/springcloud-ribbon-feign/
 public class DataServerApplication implements CommandLineRunner {
 

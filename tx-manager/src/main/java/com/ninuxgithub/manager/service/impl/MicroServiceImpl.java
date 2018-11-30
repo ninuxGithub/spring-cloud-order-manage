@@ -12,6 +12,8 @@ import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -48,7 +50,13 @@ public class MicroServiceImpl implements MicroService {
     @Override
     public TxState getState() {
         TxState state = new TxState();
-        String ipAddress = discoveryClient.getLocalServiceInstance().getHost();
+        //String ipAddress = discoveryClient.getLocalServiceInstance().getHost();
+        String ipAddress = "";
+        try {
+            ipAddress = InetAddress.getLocalHost().getHostAddress();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
         if(!isIp(ipAddress)){
             ipAddress = "127.0.0.1";
         }
