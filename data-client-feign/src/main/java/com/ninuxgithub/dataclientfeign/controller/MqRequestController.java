@@ -58,6 +58,9 @@ public class MqRequestController {
             String pid = product.getId();
             ResponseEntity<Order> entity = restTemplate.getForEntity("http://10.1.51.96:8005/api/saveOrder?pid=" + pid + "&uid=" + uid, Order.class);
             Order order = entity.getBody();
+            if(order != null){
+
+            }
             System.out.println(order);
         }
         map.put("result", messagePropety);

@@ -1,4 +1,4 @@
-package com.ninuxgithub.dataserver.controller.api;
+package com.ninuxgithub.dataserver.api;
 
 
 import com.ninuxgithub.dataserver.model.Order;

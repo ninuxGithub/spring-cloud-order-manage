@@ -1,20 +1,20 @@
 package com.ninuxgithub.dataserver;
 
-import com.ninuxgithub.dataserver.model.Product;
-import com.ninuxgithub.dataserver.model.Type;
-import com.ninuxgithub.dataserver.repository.ProductRepository;
+import com.alibaba.druid.pool.DruidDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
-import org.springframework.util.CollectionUtils;
+import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.Bean;
+import org.springframework.core.env.Environment;
 
-import java.util.Arrays;
-import java.util.List;
+import javax.sql.DataSource;
 
 @SpringBootApplication
 @EnableEurekaClient
+@EnableFeignClients
 //spring boot 2.x  兼容lcn的解决方案：https://www.cnblogs.com/sxdcgaq8080/p/9776695.html
 //参考：https://jadyer.cn/2017/01/19/springcloud-ribbon-feign/
 public class DataServerApplication implements CommandLineRunner {
@@ -24,9 +24,30 @@ public class DataServerApplication implements CommandLineRunner {
     }
 
 
-    @Autowired
-    ProductRepository productRepository;
 
+    @Autowired
+    private Environment env;
+
+    @Bean
+    public DataSource dataSource() {
+        DruidDataSource dataSource = new DruidDataSource();
+        dataSource.setUrl(env.getProperty("spring.datasource.url"));
+        dataSource.setUsername(env.getProperty("spring.datasource.username"));//用户名
+        dataSource.setPassword(env.getProperty("spring.datasource.password"));//密码
+        dataSource.setInitialSize(2);
+        dataSource.setMaxActive(20);
+        dataSource.setMinIdle(0);
+        dataSource.setMaxWait(60000);
+        dataSource.setValidationQuery("SELECT 1");
+        dataSource.setTestOnBorrow(false);
+        dataSource.setTestWhileIdle(true);
+        dataSource.setPoolPreparedStatements(false);
+        return dataSource;
+    }
+
+
+//    @Autowired
+//    ProductRepository productRepository;
 
     /**
      * 初始化产品列表
@@ -36,7 +57,7 @@ public class DataServerApplication implements CommandLineRunner {
      */
     @Override
     public void run(String... args) throws Exception {
-        List<Product> reposDataList = productRepository.findAll();
+       /* List<Product> reposDataList = productRepository.findAll();
         if (CollectionUtils.isEmpty(reposDataList)) {
             List<Product> products = Arrays.asList(
                     new Product("小米MIX", 3499d, "5月9日-21日享花呗12期分期免息", "pinpai1.png", Type.StarType, 78),
@@ -60,7 +81,7 @@ public class DataServerApplication implements CommandLineRunner {
             for (Product product : products) {
                 productRepository.save(product);
             }
-        }
+        }*/
 
 
     }

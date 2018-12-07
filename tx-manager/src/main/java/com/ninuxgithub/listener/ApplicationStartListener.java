@@ -21,7 +21,7 @@ public class ApplicationStartListener implements ApplicationListener<Application
         //TODO Spring boot 2.0.0没有EmbeddedServletContainerInitializedEvent 此处写死;modify by young
 //        int serverPort = event.getEmbeddedServletContainer().getPort();
         String ip = getIp();
-        Constants.address = ip+":48888";//写死端口号，反正TxManager端口也是配置文件配好的(●′ω`●)
+        Constants.address = ip+":8899";//写死端口号，反正TxManager端口也是配置文件配好的(●′ω`●)
     }
 
     private String getIp(){
