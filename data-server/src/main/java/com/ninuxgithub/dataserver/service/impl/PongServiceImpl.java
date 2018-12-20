@@ -25,11 +25,13 @@ public class PongServiceImpl implements PongService {
 
     @Override
     @TxTransaction(isStart = true)
-    @Transactional()
-    public Pong savePingPong() {
-        boolean flag = feignService.savePing();
+    @Transactional(rollbackFor = Exception.class)
+    public Pong savePingPong(boolean flag) {
+        feignService.savePing();
         Pong pong = pongRepository.save(new Pong(new Date()));
-        int v = 100/0;
+        if(flag){
+            int v = 100/0;
+        }
         return pong;
     }
 }
