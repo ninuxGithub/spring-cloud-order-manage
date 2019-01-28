@@ -56,5 +56,6 @@ ctrl+alt+shift +/  -->registry --> compiler.automake.allow.when.app.running true
 2018-11-26 17:52:24 加入购买-->请求加入到队列-->请求消费队列->restTamplate请求接口获取商品详细，保存到redis ->轮询获取商品的详细
 2018-11-28 17:42:38 加入订单对象关联产品用户
 2018-11-30 18:20:58 加入spring cloud 分布式事物管理 tx-manager 子模块
+2018-12-20 18:46:13 加入lcn + lcn分布式事物的测试demo
 ```
 
